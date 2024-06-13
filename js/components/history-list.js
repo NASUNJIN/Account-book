@@ -32,7 +32,7 @@ function reRender() {
 
 export function renderHistoryList() {
   // TODO: 데이터 매핑
-  // TODO: 오름차순으로 목록 나열
+  // TODO: 오름차순으로 목록 나열 - .map() 사용
   // TODO: 항목의 시간 포맷 변경: `HH:mm`
   // TODO: 금액 콤마 포맷 맞추기
 
@@ -40,20 +40,23 @@ export function renderHistoryList() {
     .map(({ date, id: dateId }) => {
       const detail = store.detailList[dateId];
       if (!detail?.length) return "";
-
+      // [1,2,3].map(_ => _) => [1,2,3]  => '1,2,3'
+      // 배열을 맵으로 돌리면 배열로 나옴 -> 우린 문자열로 받고싶음 -> join()사용!
       return `<article class="history-per-day">
       <p class="history-date">2021년 12월 1일</p>
-      <section class="history-item">
+      ${detail
+        .map(({ description, category, amount, fundsAtTheTime, createAt }) => {
+        return `<section class="history-item">
         <section class="history-item-column">
-          <div class="create-at">10:30</div>
+          <div class="create-at">${createAt}</div>
           <div class="history-detail">
             <div class="history-detail-row history-detail-title">
-              <p>아이스 아메리카노</p>
+              <p>${description}</p>
             </div>
             <div class="history-detail-row history-detail-subtitle">
-              <p>카페</p>
+              <p>${category}</p>
               <p>
-                1000000
+                ${amount}
                 <span>원</span>
               </p>
             </div>
@@ -65,11 +68,13 @@ export function renderHistoryList() {
         <section class="history-item-caption">
           <p>
             <span>남은 자산</span>
-            <span>300000</span>
+            <span>${fundsAtTheTime}</span>
             <span>원</span>
           </p>
         </section>
-      </section>
+      </section>`
+      }).join("")}
+
     </article>`;
     })
     .join("");
