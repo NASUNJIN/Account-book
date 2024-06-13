@@ -84,11 +84,22 @@ export function removeHistory(dateId, itemId) {
      * - store의 detailList 새로 갱신
      * - store.currentFunds 새로 갱신
      */
-    store.detailList[dateId] = null;
+
+    // detailList 갱신
+    // 기존 배열 -> 삭제할 요소를 제거한 배열 -> 재할당
+    store.detailList[dateId] = store.detailList[dateId].filter(({ id, amount }) => {
+      // 삭제할 요소일 경우
+      if (id === Number(itemId)) {
+        // store.currentFunds 갱신 (현재자산 갱신)
+        store.currentFunds += amount;
+      }
+      return id !== Number(itemId);
+    });
 
     updateStorage();
     return true;
   } catch (error) {
+    console.log(error);
     alert(error);
     return false;
   }

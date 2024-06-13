@@ -47,7 +47,7 @@ export function renderHistoryList() {
         // 오름차순 정렬
         .sort((a,b) => b.id - a.id)
         // 배열을 맵으로 돌리면 배열로 나옴 -> 우린 문자열로 받고싶음 -> join()사용!
-        .map(({ description, category, amount, fundsAtTheTime, createAt }) => {
+        .map(({ description, category, amount, fundsAtTheTime, createAt, id }) => {
 
           // 2024-06-13T19:58:21.249Z -> 04:58 HH:mm
           const formattedTime = new Date(createAt).toLocaleTimeString("ko-kr", {
@@ -71,7 +71,7 @@ export function renderHistoryList() {
             </div>
           </div>
           <div class="delete-section">
-            <button class="delete-button">🗑</button>
+            <button class="delete-button" data-dateid=${dateId} data-itemid=${id}>🗑</button>
           </div>
         </section>
         <section class="history-item-caption">
