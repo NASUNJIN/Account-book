@@ -6,7 +6,7 @@ import { initAddItem } from "./components/add-item";
 init();
 
 function init() {
-  initStore();
+  initStore(); // store 객체 초기화
 
   initCurrentAsset();
   initAddItem();
