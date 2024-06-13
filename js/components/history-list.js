@@ -32,7 +32,7 @@ function reRender() {
 
 export function renderHistoryList() {
   // TODO: 데이터 매핑 - ${}
-  // TODO: 오름차순으로 목록 나열 - .map() 사용
+  // TODO: 오름차순으로 목록 나열 - sort()
   // TODO: 항목의 시간 포맷 변경: `HH:mm`
   // TODO: 금액 콤마 포맷 맞추기 - toLocaleString()
 
@@ -40,12 +40,13 @@ export function renderHistoryList() {
     .map(({ date, id: dateId }) => {
       const detail = store.detailList[dateId];
       if (!detail?.length) return "";
-      // [1,2,3].map(_ => _) => [1,2,3]  => '1,2,3'
-      // 배열을 맵으로 돌리면 배열로 나옴 -> 우린 문자열로 받고싶음 -> join()사용!
-
+      
       return `<article class="history-per-day">
       <p class="history-date">2021년 12월 1일</p>
       ${detail
+        // 오름차순 정렬
+        .sort((a,b) => b.id - a.id)
+        // 배열을 맵으로 돌리면 배열로 나옴 -> 우린 문자열로 받고싶음 -> join()사용!
         .map(({ description, category, amount, fundsAtTheTime, createAt }) => {
 
           // 2024-06-13T19:58:21.249Z -> 04:58 HH:mm

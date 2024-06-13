@@ -59,7 +59,7 @@ export function addNewHistory(newHistory) {
     console.log('newHistory', newHistory);
     if (store.detailList[store.todayId]) {  // 해당날짜에 내역이 존재하는 경우
       // 1 : [...]
-      store.detailList[store.todayId] = store.detailList[store.todayId].push(newHistory);
+      store.detailList[store.todayId].push(newHistory);
     } else {
       // { }
       store.detailList[store.todayId] = [newHistory];
